@@ -1,5 +1,7 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
+import { Ability } from "./entity/Ability"
+import { AbilityCategory } from "./entity/AbilityCategory"
 
 export const AppDataSource = new DataSource({
     type: "sqlite",
@@ -7,10 +9,10 @@ export const AppDataSource = new DataSource({
     //port: 5432,
     //username: "test",
     //password: "test",
-    database: "cs2.db",
+    database: "cs.sqlite",
     synchronize: true,
     logging: false,
-    entities: ["entity/*.ts"],
+    entities: [Ability,AbilityCategory],
     migrations: [],
     subscribers: [],
 })

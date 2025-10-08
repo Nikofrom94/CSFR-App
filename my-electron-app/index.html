@@ -11,6 +11,35 @@
       content="default-src 'self'; script-src 'self'"
     />
     <title>Hello from Electron renderer!</title>
+    <script>/*
+      var typeorm = require("typeorm");
+      typeorm.createConnection().then(() => {
+          var post = {
+              title: "post title",
+              text: "post text"
+  
+          };
+          return typeorm.getRepository("Post").save(post);
+  
+      }).then(() => {
+          console.log("Saved successfully!");
+          return typeorm.getRepository("Post").find();
+  
+      }).then(posts => {
+          console.log("Posts: ", posts);
+  
+          let ul = document.getElementById("postList");
+          posts.forEach(post => {
+              var li = document.createElement('li');
+              li.innerText = post.id + ". " + post.title;
+              ul.appendChild(li);
+          });
+  
+      }).catch(error => {
+          console.error("Error: ", error);
+      });
+      */
+    </script>
   </head>
   <body>
     <h1>Hello from Electron renderer!</h1>

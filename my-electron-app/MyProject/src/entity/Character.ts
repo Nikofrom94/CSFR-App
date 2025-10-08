@@ -1,10 +1,11 @@
 import { ExecFileSyncOptionsWithBufferEncoding } from "child_process"
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, JoinTable, ManyToMany } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, JoinTable, ManyToMany, ManyToOne } from "typeorm"
 import { Ability } from "./Ability"
 import { Descriptor } from "./Descriptor"
 import { Focus } from "./Focus"
 import { Flavor } from "./Flavor"
 import { Skill } from "./Skill"
+import { CharacterSkill } from "./CharacterSkill"
 
 @Entity()
 export class Character {
@@ -22,6 +23,9 @@ export class Character {
     @Column({default:"1"})
     tier: number
 
+    @ManyToOne(() => Focus, (focus) => focus.characters)
+    focus: Focus
+
     @ManyToMany(() => Descriptor)
     @JoinTable()
     descriptors: Descriptor[]
@@ -30,14 +34,10 @@ export class Character {
     @JoinTable()
     abilities: Ability[]
 
-    @ManyToMany(() => Skill)
+    @ManyToMany(() => CharacterSkill)
     @JoinTable()
-    skills: Skill[]
-
-    @ManyToMany(() => Focus)
-    @JoinTable()
-    focus: Focus[]
-    
+    skills: CharacterSkill[]
+   
     @ManyToMany(() => Flavor)
     @JoinTable()
     flavor: Flavor[]

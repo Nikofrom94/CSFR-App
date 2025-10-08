@@ -3,7 +3,7 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateCol
 import { Ability } from "./Ability"
 
 @Entity()
-export class CharacterType {
+export class Focus {
 
     @PrimaryGeneratedColumn()
     id: number
@@ -15,26 +15,11 @@ export class CharacterType {
     @Column("varchar", { length: 50 })
     name: string
 
-    @Column("int")
-    might_start
+    @Column("varchar", { length: 50 })
+    name_en: string
 
-    @Column("int")
-    speed_start
-
-    @Column("int")
-    intellect_start
-
-    @Column("int")
-    might_edge_start
-
-    @Column("int")
-    speed_edge_start
-
-    @Column("int")
-    intellect_edge_start
-
-    @Column({type: "int", default: "2"})
-    cyphers_start
+    @Column()
+    description: string
 
     @ManyToMany(() => Ability)
     @JoinTable()
@@ -59,4 +44,6 @@ export class CharacterType {
     @ManyToMany(() => Ability)
     @JoinTable()
     abilities_tier6: Ability[]
+    
+    characters: any
 }

@@ -1,5 +1,5 @@
 import { ExecFileSyncOptionsWithBufferEncoding } from "child_process"
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, JoinTable, ManyToMany } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, JoinTable, ManyToMany, Index } from "typeorm"
 import { AbilityCategory } from "./AbilityCategory"
 
 @Entity()
@@ -13,9 +13,11 @@ export class Ability {
     @UpdateDateColumn()
 
     @Column("varchar", { length: 50 })
+    @Index(["name"], { unique: true })
     name: string
 
     @Column("varchar", { length: 50 })
+    @Index(["name_en"], { unique: true })
     name_en: string
 
     @Column("varchar", { length: 50 })
@@ -27,7 +29,7 @@ export class Ability {
     @Column()
     description: string
 
-    @Column("varchar", { length: 50 })
+    @Column("varchar", { length: 50, nullable: true })
     cs_page: string
 
     @Column("varchar", { length: 1 })
@@ -35,6 +37,6 @@ export class Ability {
     
     @ManyToMany(() => AbilityCategory)
     @JoinTable()
-    abilities_tier6: AbilityCategory[]
+    categories: AbilityCategory[]
     
 }
