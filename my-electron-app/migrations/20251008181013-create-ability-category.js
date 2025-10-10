@@ -22,6 +22,20 @@ module.exports = {
         type: Sequelize.STRING
       },
     });
+    await queryInterface.addIndex('AbilityCategories', {
+      name: 'name',
+      fields: ['name'],
+      unique: true,
+    });
+    await queryInterface.addIndex('AbilityCategories', {
+      name: 'name_en',
+      fields: ['name_en'],
+      unique: true,
+    });
+    await queryInterface.addIndex('AbilityCategories', {
+      name: 'description',
+      fields: ['description'],
+    });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('AbilityCategories');

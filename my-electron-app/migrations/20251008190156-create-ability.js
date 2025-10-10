@@ -16,20 +16,45 @@ module.exports = {
         type: Sequelize.STRING
       },
       description: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
+        allowNull: true,
       },
       cs_page: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: true,
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
+      stat: {
+        type: Sequelize.STRING,
+        allowNull: true,
       },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
+      stat_cost: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      tier: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
     });
+    await queryInterface.addIndex('Abilities', {
+        name: 'ab_name',
+        fields: ['name'],
+        unique: true,
+      });
+      await queryInterface.addIndex('Abilities', {
+        name:'ab_name_en',
+        fields: ['name_en'],
+        unique: true,
+      });
+      await queryInterface.addIndex('Abilities', {
+        name: 'ab_tier',
+        fields: ['tier'],
+      });
+      await queryInterface.addIndex('Abilities', {
+        name:'ab_description',
+        fields: ['description'],
+      });
+
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Abilities');

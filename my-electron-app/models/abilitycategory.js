@@ -21,6 +21,22 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'AbilityCategory',
+    indexes:[
+      {
+        name: 'name',
+        unique: true,
+        fields: ['name']
+      },
+      {
+        name: 'name_en',
+        unique: true,
+        fields: ['name_en']
+      },
+      {
+        name: 'description',
+        fields: ['description']
+      },
+    ]
   });
   return AbilityCategory;
 };

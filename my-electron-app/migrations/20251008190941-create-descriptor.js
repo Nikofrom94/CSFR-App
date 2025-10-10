@@ -30,6 +30,20 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
+    await queryInterface.addIndex('Descriptors', {
+      name: 'desc_name',
+      fields: ['name'],
+      unique: true,
+    });
+    await queryInterface.addIndex('Descriptors', {
+      name:'desc_name_en',
+      fields: ['name_en'],
+      unique: true,
+    });
+    await queryInterface.addIndex('Descriptors', {
+      name:'desc_description',
+      fields: ['description'],
+    });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Descriptors');

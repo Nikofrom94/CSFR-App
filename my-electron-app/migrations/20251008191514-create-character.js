@@ -21,6 +21,12 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
+    await queryInterface.addIndex('Characters', {
+      name: 'character_name',
+      fields: ['name'],
+      unique: true,
+    });
+
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Characters');
