@@ -23,17 +23,17 @@ module.exports = {
       },
     });
     await queryInterface.addIndex('AbilityCategories', {
-      name: 'name',
+      name: 'ab_categ_name',
       fields: ['name'],
       unique: true,
     });
     await queryInterface.addIndex('AbilityCategories', {
-      name: 'name_en',
+      name: 'ab_categ_name_en',
       fields: ['name_en'],
       unique: true,
     });
     await queryInterface.addIndex('AbilityCategories', {
-      name: 'description',
+      name: 'ab_categ_description',
       fields: ['description'],
     });
   },

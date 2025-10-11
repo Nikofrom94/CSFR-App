@@ -4,6 +4,7 @@ const {
 } = require('sequelize');
 
 import { Focus } from "./focus";
+import  {CharacterType } from "./charactertype";
 
 module.exports = (sequelize, DataTypes) => {
   class Ability extends Model {
@@ -23,13 +24,15 @@ module.exports = (sequelize, DataTypes) => {
           Lang,
           {foreignKey: 'langId',}
       );
-      Ability.belongsToMany(Focus, { through: 'FocusAbilityTier1' });
-      Ability.belongsToMany(Focus, { through: 'FocusAbilityTier2' });
-      Ability.belongsToMany(Focus, { through: 'FocusAbilityTier3' });
-      Ability.belongsToMany(Focus, { through: 'FocusAbilityTier4' });
-      Ability.belongsToMany(Focus, { through: 'FocusAbilityTier5' });
-      Ability.belongsToMany(Focus, { through: 'FocusAbilityTier6' });    
+      Ability.belongsToMany(FocusAbilities, { through: 'FocusAbilities' });
+      Ability.belongsToMany(FocusAbilities, { through: 'FocusAbilitiesToChoose' });
       Ability.belongsToMany(Character, { through: 'CharacterAbility' });
+      Ability.belongsToMany(CharacterType, { through: 'charactertypeabilities_tier1' });
+      Ability.belongsToMany(CharacterType, { through: 'charactertypeabilities_tier2' });
+      Ability.belongsToMany(CharacterType, { through: 'charactertypeabilities_tier3' });
+      Ability.belongsToMany(CharacterType, { through: 'charactertypeabilities_tier4' });
+      Ability.belongsToMany(CharacterType, { through: 'charactertypeabilities_tier5' });
+      Ability.belongsToMany(CharacterType, { through: 'charactertypeabilities_tier6' });    
     }
   }
   Ability.init({
@@ -65,6 +68,21 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Ability',
+    indexes:[
+      {
+        unique: true,
+        fields: ['name'],
+        name:"ab_name_index"
+      },
+      {
+        fields: ['description'],
+        name:"ab_description_index"
+      },
+      {
+        fields: ['tier'],
+        name:"ab_tier_index"
+      },
+    ],
   });
   return Ability;
 };

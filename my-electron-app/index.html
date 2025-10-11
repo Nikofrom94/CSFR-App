@@ -4,47 +4,39 @@
     <meta charset="UTF-8" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'"
     />
     <meta
       http-equiv="X-Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'"
+      content="default-src 'self'; script-src 'self';"
     />
+
+    <link href="./static/bootstrap-5.3.3-dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="./static/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="./static/jquery-3.7.1-dist/jquery-3.7.1.min.js"></script>
+
     <title>Hello from Electron renderer!</title>
-    <script>/*
-      var typeorm = require("typeorm");
-      typeorm.createConnection().then(() => {
-          var post = {
-              title: "post title",
-              text: "post text"
-  
-          };
-          return typeorm.getRepository("Post").save(post);
-  
-      }).then(() => {
-          console.log("Saved successfully!");
-          return typeorm.getRepository("Post").find();
-  
-      }).then(posts => {
-          console.log("Posts: ", posts);
-  
-          let ul = document.getElementById("postList");
-          posts.forEach(post => {
-              var li = document.createElement('li');
-              li.innerText = post.id + ". " + post.title;
-              ul.appendChild(li);
-          });
-  
-      }).catch(error => {
-          console.error("Error: ", error);
-      });
-      */
-    </script>
+
   </head>
   <body>
     <h1>Hello from Electron renderer!</h1>
     <p>👋</p>
-    <p id="info"></p>
+    <div id="info">
+      <table class="table-striped" id="focus_table">
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>name_en</th>
+            <th>description</th>
+            <th>cs_page</th>
+          </tr>
+        </thead>
+        <tbody id="focus_table_body">
+
+        </tbody>
+      </table>
+    </div>
   </body>
   <script src="./renderer.js"></script>
 </html>

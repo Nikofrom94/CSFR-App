@@ -56,6 +56,25 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Descriptor',
+    indexes:[
+      {
+        unique: true,
+        fields: ['name'],
+        name:"desc_name_index"
+      },
+      {
+        fields: ['name_en'],
+        name:"desc_name_en_index"
+      },
+      {
+        fields: ['description'],
+        name:"desc_description_index"
+      },
+      {
+        fields: ['tier'],
+        name:"desc_tier_index"
+      },
+    ],
   });
   return Descriptor;
 };

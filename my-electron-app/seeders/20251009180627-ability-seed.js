@@ -27,6 +27,7 @@ module.exports = {
         }
         if(!skip){
           ab_list.push({
+            id: cscg_model.pk,
             name: cscg_model.fields.name,
             name_en: cscg_model.fields.name_en,
             stat:  cscg_model.fields.stat,

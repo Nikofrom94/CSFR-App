@@ -14,12 +14,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Focus.belongsToMany(Ability, { through: 'FocusAbilityTier1' });
-      Focus.belongsToMany(Ability, { through: 'FocusAbilityTier2' });
-      Focus.belongsToMany(Ability, { through: 'FocusAbilityTier3' });
-      Focus.belongsToMany(Ability, { through: 'FocusAbilityTier4' });
-      Focus.belongsToMany(Ability, { through: 'FocusAbilityTier5' });
-      Focus.belongsToMany(Ability, { through: 'FocusAbilityTier6' });
+      Focus.belongsToMany(FocusAbilities, { through: 'FocusAbilitiesTier1' });
+      Focus.belongsToMany(FocusAbilities, { through: 'FocusAbilitiesTier2' });
+      Focus.belongsToMany(FocusAbilities, { through: 'FocusAbilitiesTier3' });
+      Focus.belongsToMany(FocusAbilities, { through: 'FocusAbilitiesTier4' });
+      Focus.belongsToMany(FocusAbilities, { through: 'FocusAbilitiesTier5' });
+      Focus.belongsToMany(FocusAbilities, { through: 'FocusAbilitiesTier6' });
       Focus.belongsToMany(Character, { through: 'CharacterFocus' });
     }
   }

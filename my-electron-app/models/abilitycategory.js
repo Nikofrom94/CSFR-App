@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Ability.belongsTo(
+        Lang,
+        {foreignKey: 'langId',}
+    );
     }
   }
   AbilityCategory.init({
@@ -23,17 +27,16 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'AbilityCategory',
     indexes:[
       {
-        name: 'name',
+        name: 'ab_categ_name_index',
         unique: true,
         fields: ['name']
       },
       {
-        name: 'name_en',
-        unique: true,
+        name: 'ab_categ_name_en_index',
         fields: ['name_en']
       },
       {
-        name: 'description',
+        name: 'ab_categ_description_index',
         fields: ['description']
       },
     ]
