@@ -1,7 +1,7 @@
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
+//import { createRequire } from 'module';
+//const require = createRequire(import.meta.url);
 
-export function get_data(json_file){
+function get_data(json_file){
     console.log('Loading JSON from' + json_file);
       const cscg_json = require( json_file )
       let ab_categ_list = [];
@@ -205,4 +205,4 @@ export function get_data(json_file){
       }
   }
   
-  
+  module.exports = {get_data};

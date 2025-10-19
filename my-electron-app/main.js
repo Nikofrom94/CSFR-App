@@ -1,9 +1,10 @@
 
-const {db_initialize} = require('./db_sync.mjs');
+const {db} = require('./models/index.js')
+console.log("synchronize model");
+db.sequelize.sync();
+console.log("model loaded");
 
-db_initialize();
-
-const {get_data} = require( './json_loader.mjs');
+const {get_data} = require( './json_loader.js');
 
 function handleGetData(){
   return get_data('/home/niko/Documents/jdr/CypherSystem/Cypher-SRD-FR/CSCG/csrd-20241001.json');
@@ -25,11 +26,13 @@ const createWindow = () => {
 }
 
 app.whenReady().then(() => {
-  ipcMain.handle('ping', () => 'pong')
-  ipcMain.on('get-data', handleGetData)
-  createWindow()
+  ipcMain.handle('ping', () => 'pong');
+  const json_data = handleGetData();
+  ipcMain.handle('get-data', () =>  json_data);
+//  ipcMain.on('get-data', handleGetData);
+  createWindow();
 })
 
 app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') app.quit()
+    if (process.platform !== 'darwin') app.quit();
   })

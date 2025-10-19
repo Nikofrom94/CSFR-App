@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class AbilityCategory extends Model {
     /**
@@ -11,10 +12,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Ability.belongsTo(
-        Lang,
-        {foreignKey: 'langId',}
-    );
+      models['AbilityCategory'].belongsTo( models['Lang'] );
+      models['AbilityCategory'].belongsToMany( models['Ability'], {through: 'Ability_Categories'});
     }
   }
   AbilityCategory.init({

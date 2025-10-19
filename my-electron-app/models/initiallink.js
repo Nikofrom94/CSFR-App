@@ -2,7 +2,6 @@
 const {
   Model
 } = require('sequelize');
-import { Descriptor } from "./descriptor";
 
 module.exports = (sequelize, DataTypes) => {
   class InitialLink extends Model {
@@ -13,10 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      InitialLink.belongsTo(
-        Descriptor,
-        {foreignKey: 'descriptorId',}
-    );
+      models['InitialLink'].belongsTo( models['Descriptor']);
     }
   }
   InitialLink.init({

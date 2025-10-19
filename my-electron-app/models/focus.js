@@ -3,7 +3,6 @@ const {
   Model
 } = require('sequelize');
 
-import {Ability} from "./ability";
 
 module.exports = (sequelize, DataTypes) => {
   class Focus extends Model {
@@ -14,30 +13,31 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Focus.belongsToMany(FocusAbilities, { through: 'FocusAbilitiesTier1' });
-      Focus.belongsToMany(FocusAbilities, { through: 'FocusAbilitiesTier2' });
-      Focus.belongsToMany(FocusAbilities, { through: 'FocusAbilitiesTier3' });
-      Focus.belongsToMany(FocusAbilities, { through: 'FocusAbilitiesTier4' });
-      Focus.belongsToMany(FocusAbilities, { through: 'FocusAbilitiesTier5' });
-      Focus.belongsToMany(FocusAbilities, { through: 'FocusAbilitiesTier6' });
-      Focus.belongsToMany(Character, { through: 'CharacterFocus' });
+      models['Flavor'].belongsTo(models['Lang']);
+      models['Focus'].belongsToMany(models['FocusAbilities'], { through: 'FocusAbilitiesTier1' });
+      models['Focus'].belongsToMany(models['FocusAbilities'], { through: 'FocusAbilitiesTier2' });
+      models['Focus'].belongsToMany(models['FocusAbilities'], { through: 'FocusAbilitiesTier3' });
+      models['Focus'].belongsToMany(models['FocusAbilities'], { through: 'FocusAbilitiesTier4' });
+      models['Focus'].belongsToMany(models['FocusAbilities'], { through: 'FocusAbilitiesTier5' });
+      models['Focus'].belongsToMany(models['FocusAbilities'], { through: 'FocusAbilitiesTier6' });
+      models['Focus'].belongsToMany(models['Character'], { through: 'CharacterFocus' });
     }
   }
   Focus.init({
     name: {
-      type: sequelize.DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     name_en: {
-      type: sequelize.DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     description: {
-      type: sequelize.DataTypes.TEXT,
+      type: DataTypes.TEXT,
       allowNull: true
     },
     cs_page: {
-      type: sequelize.DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: true
     },
   }, {

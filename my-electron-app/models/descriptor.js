@@ -3,9 +3,6 @@ const {
   Model
 } = require('sequelize');
 
-import { InitialLink } from "./initiallink";
-import { DescriptorCharacteristic } from "./descriptorcharacteristic";
-
 module.exports = (sequelize, DataTypes) => {
   class Descriptor extends Model {
     /**
@@ -15,42 +12,38 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Descriptor.hasMany(
-        InitialLink
-      );
-      
-      Descriptor.hasMany(
-          DescriptorCharacteristic
-      );
+      models['Descriptor'].hasMany(models['Lang']);
+      models['Descriptor'].hasMany(models['InitialLink']);
+      models['Descriptor'].hasMany(models['DescriptorCharacteristic']);
       }
   }
   Descriptor.init({
     name: {
-      type: sequelize.DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     name_en: {
-        type: sequelize.DataTypes.STRING,
+        type: DataTypes.STRING,
         allowNull: false
       },
     description: {
-    type: sequelize.DataTypes.TEXT,
+    type: DataTypes.TEXT,
     allowNull: true
     },
     cs_page: {
-    type: sequelize.DataTypes.STRING,
+    type: DataTypes.STRING,
     allowNull: true
     },
     might_modifier:{
-        type: sequelize.DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         default: 0
     },
     speed_modifier:{
-        type: sequelize.DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         default: 0
     },
     intellect_modifier:{
-        type: sequelize.DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         default: 0
     },
   }, {
@@ -69,10 +62,6 @@ module.exports = (sequelize, DataTypes) => {
       {
         fields: ['description'],
         name:"desc_description_index"
-      },
-      {
-        fields: ['tier'],
-        name:"desc_tier_index"
       },
     ],
   });

@@ -1,5 +1,5 @@
 'use strict';
-import {Ability} from "./ability";
+const {Ability} = require("./ability");
 
 const {
   Model
@@ -13,26 +13,27 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-        // define association here
-        CharacterType.belongsToMany(Ability, { through: 'charactertypeabilities_tier1' });
-        CharacterType.belongsToMany(Ability, { through: 'charactertypeabilities_tier2' });
-        CharacterType.belongsToMany(Ability, { through: 'charactertypeabilities_tier3' });
-        CharacterType.belongsToMany(Ability, { through: 'charactertypeabilities_tier4' });
-        CharacterType.belongsToMany(Ability, { through: 'charactertypeabilities_tier5' });
-        CharacterType.belongsToMany(Ability, { through: 'charactertypeabilities_tier6' });    
+        models['CharacterType'].hasMany(models['Character']);
+        models['CharacterType'].hasMany(models['Lang']);
+        models['CharacterType'].belongsToMany(models['Ability'], { through: 'charactertypeabilities_tier1' });
+        models['CharacterType'].belongsToMany(models['Ability'], { through: 'charactertypeabilities_tier2' });
+        models['CharacterType'].belongsToMany(models['Ability'], { through: 'charactertypeabilities_tier3' });
+        models['CharacterType'].belongsToMany(models['Ability'], { through: 'charactertypeabilities_tier4' });
+        models['CharacterType'].belongsToMany(models['Ability'], { through: 'charactertypeabilities_tier5' });
+        models['CharacterType'].belongsToMany(models['Ability'], { through: 'charactertypeabilities_tier6' });    
       }
   }
   CharacterType.init({
     name: {
-      type: sequelize.DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     name_en: {
-        type: sequelize.DataTypes.STRING,
+        type: DataTypes.STRING,
         allowNull: false
       },
     might_start: {
-        type: sequelize.DataTypes.NUMBER,
+        type: DataTypes.NUMBER,
         allowNull: false,
         default: 1,
         validate: {
@@ -41,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     },
     speed_start: {
-        type: sequelize.DataTypes.NUMBER,
+        type: DataTypes.NUMBER,
         allowNull: false,
         default: 1,
         validate: {
@@ -50,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     },
     intellect_start: {
-        type: sequelize.DataTypes.NUMBER,
+        type: DataTypes.NUMBER,
         allowNull: false,
         default: 1,
         validate: {
@@ -59,7 +60,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     },
     might_edge_start: {
-        type: sequelize.DataTypes.NUMBER,
+        type: DataTypes.NUMBER,
         allowNull: false,
         default: 1,
         validate: {
@@ -68,7 +69,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     },
     speed_edge_start: {
-        type: sequelize.DataTypes.NUMBER,
+        type: DataTypes.NUMBER,
         allowNull: false,
         default: 1,
         validate: {
@@ -77,7 +78,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     },
     intellect_edge_start: {
-        type: sequelize.DataTypes.NUMBER,
+        type: DataTypes.NUMBER,
         allowNull: false,
         default: 1,
         validate: {
@@ -86,7 +87,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     },
     cyphers_start: {
-        type: sequelize.DataTypes.NUMBER,
+        type: DataTypes.NUMBER,
         allowNull: false,
         default: 2,
         validate: {

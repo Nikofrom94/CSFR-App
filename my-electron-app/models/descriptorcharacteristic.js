@@ -3,7 +3,6 @@ const {
   Model
 } = require('sequelize');
 
-import { Descriptor } from "./descriptor";
 
 module.exports = (sequelize, DataTypes) => {
   class DescriptorCharacteristic extends Model {
@@ -14,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      DescriptorCharacteristic.belongTo(Descriptor);
+      models['DescriptorCharacteristic'].belongsTo(models['Descriptor']);
     }
   }
   DescriptorCharacteristic.init({

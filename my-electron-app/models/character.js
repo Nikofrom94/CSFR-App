@@ -2,6 +2,8 @@
 const {
   Model
 } = require('sequelize');
+
+
 module.exports = (sequelize, DataTypes) => {
   class Character extends Model {
     /**
@@ -10,16 +12,19 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+        models['Character'].belongsTo(models['CharacterType']);
+        models['Character'].belongsToMany(models['Ability'], { through: 'CharacterAbilities' });
+        models['Character'].belongsToMany(models['Flavor'], { through: 'CharacterFlavor' });
+        models['Character'].belongsToMany(models['Focus'], { through: 'CharacterFocus' });
     }
   }
   Character.init({
     name: {
-      type: sequelize.DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     tier: {
-        type: sequelize.DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         allowNull: false,
         default: 1,
         validate: {
@@ -28,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     },
     might: {
-        type: sequelize.DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         allowNull: false,
         default: 1,
         validate: {
@@ -37,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     },
     speed: {
-        type: sequelize.DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         allowNull: false,
         default: 1,
         validate: {
@@ -46,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     },
     intellect: {
-        type: sequelize.DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         allowNull: false,
         default: 1,
         validate: {
@@ -55,7 +60,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     },
     might_edge: {
-        type: sequelize.DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         allowNull: false,
         default: 1,
         validate: {
@@ -64,7 +69,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     },
     speed_edge: {
-        type: sequelize.DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         allowNull: false,
         default: 1,
         validate: {
@@ -73,7 +78,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     },
     intellect_edge: {
-        type: sequelize.DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         allowNull: false,
         default: 1,
         validate: {
@@ -82,7 +87,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     },
     max_cyphers: {
-        type: sequelize.DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         allowNull: false,
         default: 2,
         validate: {

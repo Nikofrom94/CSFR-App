@@ -1,7 +1,10 @@
 {
   "development": {
     "storage": "database_development",
-    "dialect": "sqlite"
+    "dialect": "sqlite",
+    "use_env_variable": false,
+    "username": "",
+    "password": ""
   },
   "test": {
     "storage": "database_test",
