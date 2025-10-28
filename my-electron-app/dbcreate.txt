@@ -1,0 +1,141 @@
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Abilities';
+Executing (default): CREATE TABLE IF NOT EXISTS `Abilities` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` VARCHAR(255) NOT NULL, `name_en` VARCHAR(255) NOT NULL, `stat_cost` VARCHAR(255), `stat` VARCHAR(255), `description` TEXT, `cs_page` VARCHAR(255), `tier` VARCHAR(255), `birthday` DATETIME, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `LangId` INTEGER REFERENCES `Langs` (`id`) ON DELETE SET NULL ON UPDATE CASCADE);
+Executing (default): PRAGMA INDEX_LIST(`Abilities`)
+Executing (default): CREATE UNIQUE INDEX `ab_name_index` ON `Abilities` (`name`)
+Executing (default): CREATE INDEX `ab_description_index` ON `Abilities` (`description`)
+Executing (default): CREATE INDEX `ab_tier_index` ON `Abilities` (`tier`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='AbilityCategories';
+Executing (default): CREATE TABLE IF NOT EXISTS `AbilityCategories` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` VARCHAR(255), `name_en` VARCHAR(255), `description` TEXT, `cs_page` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `LangId` INTEGER REFERENCES `Langs` (`id`) ON DELETE SET NULL ON UPDATE CASCADE);
+Executing (default): PRAGMA INDEX_LIST(`AbilityCategories`)
+Executing (default): CREATE UNIQUE INDEX `ab_categ_name_index` ON `AbilityCategories` (`name`)
+Executing (default): CREATE INDEX `ab_categ_name_en_index` ON `AbilityCategories` (`name_en`)
+Executing (default): CREATE INDEX `ab_categ_description_index` ON `AbilityCategories` (`description`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Characters';
+Executing (default): CREATE TABLE IF NOT EXISTS `Characters` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` VARCHAR(255) NOT NULL, `tier` INTEGER NOT NULL, `might` INTEGER NOT NULL, `speed` INTEGER NOT NULL, `intellect` INTEGER NOT NULL, `might_edge` INTEGER NOT NULL, `speed_edge` INTEGER NOT NULL, `intellect_edge` INTEGER NOT NULL, `max_cyphers` INTEGER NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `CharacterTypeId` INTEGER REFERENCES `CharacterTypes` (`id`) ON DELETE SET NULL ON UPDATE CASCADE);
+Executing (default): PRAGMA INDEX_LIST(`Characters`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='CharacterTypes';
+Executing (default): CREATE TABLE IF NOT EXISTS `CharacterTypes` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` VARCHAR(255) NOT NULL, `name_en` VARCHAR(255) NOT NULL, `might_start` NUMBER NOT NULL, `speed_start` NUMBER NOT NULL, `intellect_start` NUMBER NOT NULL, `might_edge_start` NUMBER NOT NULL, `speed_edge_start` NUMBER NOT NULL, `intellect_edge_start` NUMBER NOT NULL, `cyphers_start` NUMBER NOT NULL, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `LangId` INTEGER REFERENCES `Langs` (`id`) ON DELETE SET NULL ON UPDATE CASCADE);
+Executing (default): PRAGMA INDEX_LIST(`CharacterTypes`)
+Executing (default): CREATE UNIQUE INDEX `charactertype_name_index` ON `CharacterTypes` (`name`)
+Executing (default): CREATE INDEX `charactertype_name_en_index` ON `CharacterTypes` (`name_en`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Descriptors';
+Executing (default): CREATE TABLE IF NOT EXISTS `Descriptors` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` VARCHAR(255) NOT NULL, `name_en` VARCHAR(255) NOT NULL, `description` TEXT, `cs_page` VARCHAR(255), `might_modifier` INTEGER, `speed_modifier` INTEGER, `intellect_modifier` INTEGER, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `LangId` INTEGER REFERENCES `Langs` (`id`) ON DELETE SET NULL ON UPDATE CASCADE);
+Executing (default): PRAGMA INDEX_LIST(`Descriptors`)
+Executing (default): CREATE UNIQUE INDEX `desc_name_index` ON `Descriptors` (`name`)
+Executing (default): CREATE INDEX `desc_name_en_index` ON `Descriptors` (`name_en`)
+Executing (default): CREATE INDEX `desc_description_index` ON `Descriptors` (`description`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='DescriptorCharacteristics';
+Executing (default): CREATE TABLE IF NOT EXISTS `DescriptorCharacteristics` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` VARCHAR(255), `name_en` VARCHAR(255), `description` TEXT, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `DescriptorId` INTEGER REFERENCES `Descriptors` (`id`) ON DELETE SET NULL ON UPDATE CASCADE);
+Executing (default): PRAGMA INDEX_LIST(`DescriptorCharacteristics`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Flavors';
+Executing (default): CREATE TABLE IF NOT EXISTS `Flavors` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` VARCHAR(255) NOT NULL, `name_en` VARCHAR(255) NOT NULL, `description` TEXT, `cs_page` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `LangId` INTEGER REFERENCES `Langs` (`id`) ON DELETE SET NULL ON UPDATE CASCADE);
+Executing (default): PRAGMA INDEX_LIST(`Flavors`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Focus';
+Executing (default): CREATE TABLE IF NOT EXISTS `Focus` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` VARCHAR(255) NOT NULL, `name_en` VARCHAR(255) NOT NULL, `description` TEXT, `cs_page` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `LangId` INTEGER REFERENCES `Langs` (`id`) ON DELETE SET NULL ON UPDATE CASCADE);
+Executing (default): PRAGMA INDEX_LIST(`Focus`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='FocusAbilities';
+Executing (default): CREATE TABLE IF NOT EXISTS `FocusAbilities` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL);
+Executing (default): PRAGMA INDEX_LIST(`FocusAbilities`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='InitialLinks';
+Executing (default): CREATE TABLE IF NOT EXISTS `InitialLinks` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `description` TEXT, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `DescriptorId` INTEGER REFERENCES `Descriptors` (`id`) ON DELETE SET NULL ON UPDATE CASCADE);
+Executing (default): PRAGMA INDEX_LIST(`InitialLinks`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Langs';
+Executing (default): CREATE TABLE IF NOT EXISTS `Langs` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `CharacterTypeId` INTEGER REFERENCES `CharacterTypes` (`id`) ON DELETE SET NULL ON UPDATE CASCADE, `DescriptorId` INTEGER REFERENCES `Descriptors` (`id`) ON DELETE SET NULL ON UPDATE CASCADE);
+Executing (default): PRAGMA INDEX_LIST(`Langs`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='Ability_Categories';
+Executing (default): CREATE TABLE IF NOT EXISTS `Ability_Categories` (`createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `AbilityId` INTEGER NOT NULL REFERENCES `Abilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, `AbilityCategoryId` INTEGER NOT NULL REFERENCES `AbilityCategories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (`AbilityId`, `AbilityCategoryId`));
+Executing (default): PRAGMA INDEX_LIST(`Ability_Categories`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_Ability_Categories_1`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='FlavorAbilityTier1';
+Executing (default): CREATE TABLE IF NOT EXISTS `FlavorAbilityTier1` (`createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `AbilityId` INTEGER NOT NULL REFERENCES `Abilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, `FlavorId` INTEGER NOT NULL REFERENCES `Flavors` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (`AbilityId`, `FlavorId`));
+Executing (default): PRAGMA INDEX_LIST(`FlavorAbilityTier1`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_FlavorAbilityTier1_1`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='FlavorAbilityTier2';
+Executing (default): CREATE TABLE IF NOT EXISTS `FlavorAbilityTier2` (`createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `AbilityId` INTEGER NOT NULL REFERENCES `Abilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, `FlavorId` INTEGER NOT NULL REFERENCES `Flavors` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (`AbilityId`, `FlavorId`));
+Executing (default): PRAGMA INDEX_LIST(`FlavorAbilityTier2`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_FlavorAbilityTier2_1`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='FlavorAbilityTier3';
+Executing (default): CREATE TABLE IF NOT EXISTS `FlavorAbilityTier3` (`createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `AbilityId` INTEGER NOT NULL REFERENCES `Abilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, `FlavorId` INTEGER NOT NULL REFERENCES `Flavors` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (`AbilityId`, `FlavorId`));
+Executing (default): PRAGMA INDEX_LIST(`FlavorAbilityTier3`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_FlavorAbilityTier3_1`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='FlavorAbilityTier4';
+Executing (default): CREATE TABLE IF NOT EXISTS `FlavorAbilityTier4` (`createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `AbilityId` INTEGER NOT NULL REFERENCES `Abilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, `FlavorId` INTEGER NOT NULL REFERENCES `Flavors` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (`AbilityId`, `FlavorId`));
+Executing (default): PRAGMA INDEX_LIST(`FlavorAbilityTier4`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_FlavorAbilityTier4_1`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='FlavorAbilityTier5';
+Executing (default): CREATE TABLE IF NOT EXISTS `FlavorAbilityTier5` (`createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `AbilityId` INTEGER NOT NULL REFERENCES `Abilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, `FlavorId` INTEGER NOT NULL REFERENCES `Flavors` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (`AbilityId`, `FlavorId`));
+Executing (default): PRAGMA INDEX_LIST(`FlavorAbilityTier5`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_FlavorAbilityTier5_1`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='FlavorAbilityTier6';
+Executing (default): CREATE TABLE IF NOT EXISTS `FlavorAbilityTier6` (`createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `AbilityId` INTEGER NOT NULL REFERENCES `Abilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, `FlavorId` INTEGER NOT NULL REFERENCES `Flavors` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (`AbilityId`, `FlavorId`));
+Executing (default): PRAGMA INDEX_LIST(`FlavorAbilityTier6`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_FlavorAbilityTier6_1`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='FocusAbilitiesToGet';
+Executing (default): CREATE TABLE IF NOT EXISTS `FocusAbilitiesToGet` (`createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `AbilityId` INTEGER NOT NULL REFERENCES `Abilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, `FocusAbilityId` INTEGER NOT NULL REFERENCES `FocusAbilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (`AbilityId`, `FocusAbilityId`));
+Executing (default): PRAGMA INDEX_LIST(`FocusAbilitiesToGet`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_FocusAbilitiesToGet_1`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='FocusAbilitiesToChoose';
+Executing (default): CREATE TABLE IF NOT EXISTS `FocusAbilitiesToChoose` (`createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `AbilityId` INTEGER NOT NULL REFERENCES `Abilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, `FocusAbilityId` INTEGER NOT NULL REFERENCES `FocusAbilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (`AbilityId`, `FocusAbilityId`));
+Executing (default): PRAGMA INDEX_LIST(`FocusAbilitiesToChoose`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_FocusAbilitiesToChoose_1`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='CharacterAbilities';
+Executing (default): CREATE TABLE IF NOT EXISTS `CharacterAbilities` (`createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `AbilityId` INTEGER NOT NULL REFERENCES `Abilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, `CharacterId` INTEGER NOT NULL REFERENCES `Characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (`AbilityId`, `CharacterId`));
+Executing (default): PRAGMA INDEX_LIST(`CharacterAbilities`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_CharacterAbilities_1`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='charactertypeabilities_tier1';
+Executing (default): CREATE TABLE IF NOT EXISTS `charactertypeabilities_tier1` (`createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `AbilityId` INTEGER NOT NULL REFERENCES `Abilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, `CharacterTypeId` INTEGER NOT NULL REFERENCES `CharacterTypes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (`AbilityId`, `CharacterTypeId`));
+Executing (default): PRAGMA INDEX_LIST(`charactertypeabilities_tier1`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_charactertypeabilities_tier1_1`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='charactertypeabilities_tier2';
+Executing (default): CREATE TABLE IF NOT EXISTS `charactertypeabilities_tier2` (`createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `AbilityId` INTEGER NOT NULL REFERENCES `Abilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, `CharacterTypeId` INTEGER NOT NULL REFERENCES `CharacterTypes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (`AbilityId`, `CharacterTypeId`));
+Executing (default): PRAGMA INDEX_LIST(`charactertypeabilities_tier2`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_charactertypeabilities_tier2_1`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='charactertypeabilities_tier3';
+Executing (default): CREATE TABLE IF NOT EXISTS `charactertypeabilities_tier3` (`createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `AbilityId` INTEGER NOT NULL REFERENCES `Abilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, `CharacterTypeId` INTEGER NOT NULL REFERENCES `CharacterTypes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (`AbilityId`, `CharacterTypeId`));
+Executing (default): PRAGMA INDEX_LIST(`charactertypeabilities_tier3`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_charactertypeabilities_tier3_1`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='charactertypeabilities_tier4';
+Executing (default): CREATE TABLE IF NOT EXISTS `charactertypeabilities_tier4` (`createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `AbilityId` INTEGER NOT NULL REFERENCES `Abilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, `CharacterTypeId` INTEGER NOT NULL REFERENCES `CharacterTypes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (`AbilityId`, `CharacterTypeId`));
+Executing (default): PRAGMA INDEX_LIST(`charactertypeabilities_tier4`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_charactertypeabilities_tier4_1`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='charactertypeabilities_tier5';
+Executing (default): CREATE TABLE IF NOT EXISTS `charactertypeabilities_tier5` (`createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `AbilityId` INTEGER NOT NULL REFERENCES `Abilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, `CharacterTypeId` INTEGER NOT NULL REFERENCES `CharacterTypes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (`AbilityId`, `CharacterTypeId`));
+Executing (default): PRAGMA INDEX_LIST(`charactertypeabilities_tier5`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_charactertypeabilities_tier5_1`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='charactertypeabilities_tier6';
+Executing (default): CREATE TABLE IF NOT EXISTS `charactertypeabilities_tier6` (`createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `AbilityId` INTEGER NOT NULL REFERENCES `Abilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, `CharacterTypeId` INTEGER NOT NULL REFERENCES `CharacterTypes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (`AbilityId`, `CharacterTypeId`));
+Executing (default): PRAGMA INDEX_LIST(`charactertypeabilities_tier6`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_charactertypeabilities_tier6_1`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='CharacterFlavor';
+Executing (default): CREATE TABLE IF NOT EXISTS `CharacterFlavor` (`createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `CharacterId` INTEGER NOT NULL REFERENCES `Characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, `FlavorId` INTEGER NOT NULL REFERENCES `Flavors` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (`CharacterId`, `FlavorId`));
+Executing (default): PRAGMA INDEX_LIST(`CharacterFlavor`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_CharacterFlavor_1`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='CharacterFocus';
+Executing (default): CREATE TABLE IF NOT EXISTS `CharacterFocus` (`createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `CharacterId` INTEGER NOT NULL REFERENCES `Characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, `FocuId` INTEGER NOT NULL REFERENCES `Focus` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (`CharacterId`, `FocuId`));
+Executing (default): PRAGMA INDEX_LIST(`CharacterFocus`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_CharacterFocus_1`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='FocusAbilitiesTier1';
+Executing (default): CREATE TABLE IF NOT EXISTS `FocusAbilitiesTier1` (`createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `FocuId` INTEGER NOT NULL REFERENCES `Focus` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, `FocusAbilityId` INTEGER NOT NULL REFERENCES `FocusAbilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (`FocuId`, `FocusAbilityId`));
+Executing (default): PRAGMA INDEX_LIST(`FocusAbilitiesTier1`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_FocusAbilitiesTier1_1`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='FocusAbilitiesTier2';
+Executing (default): CREATE TABLE IF NOT EXISTS `FocusAbilitiesTier2` (`createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `FocuId` INTEGER NOT NULL REFERENCES `Focus` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, `FocusAbilityId` INTEGER NOT NULL REFERENCES `FocusAbilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (`FocuId`, `FocusAbilityId`));
+Executing (default): PRAGMA INDEX_LIST(`FocusAbilitiesTier2`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_FocusAbilitiesTier2_1`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='FocusAbilitiesTier3';
+Executing (default): CREATE TABLE IF NOT EXISTS `FocusAbilitiesTier3` (`createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `FocuId` INTEGER NOT NULL REFERENCES `Focus` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, `FocusAbilityId` INTEGER NOT NULL REFERENCES `FocusAbilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (`FocuId`, `FocusAbilityId`));
+Executing (default): PRAGMA INDEX_LIST(`FocusAbilitiesTier3`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_FocusAbilitiesTier3_1`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='FocusAbilitiesTier4';
+Executing (default): CREATE TABLE IF NOT EXISTS `FocusAbilitiesTier4` (`createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `FocuId` INTEGER NOT NULL REFERENCES `Focus` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, `FocusAbilityId` INTEGER NOT NULL REFERENCES `FocusAbilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (`FocuId`, `FocusAbilityId`));
+Executing (default): PRAGMA INDEX_LIST(`FocusAbilitiesTier4`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_FocusAbilitiesTier4_1`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='FocusAbilitiesTier5';
+Executing (default): CREATE TABLE IF NOT EXISTS `FocusAbilitiesTier5` (`createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `FocuId` INTEGER NOT NULL REFERENCES `Focus` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, `FocusAbilityId` INTEGER NOT NULL REFERENCES `FocusAbilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (`FocuId`, `FocusAbilityId`));
+Executing (default): PRAGMA INDEX_LIST(`FocusAbilitiesTier5`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_FocusAbilitiesTier5_1`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='FocusAbilitiesTier6';
+Executing (default): CREATE TABLE IF NOT EXISTS `FocusAbilitiesTier6` (`createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `FocuId` INTEGER NOT NULL REFERENCES `Focus` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, `FocusAbilityId` INTEGER NOT NULL REFERENCES `FocusAbilities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (`FocuId`, `FocusAbilityId`));
+Executing (default): PRAGMA INDEX_LIST(`FocusAbilitiesTier6`)
+Executing (default): PRAGMA INDEX_INFO(`sqlite_autoindex_FocusAbilitiesTier6_1`)
+Executing (default): PRAGMA foreign_keys = ON

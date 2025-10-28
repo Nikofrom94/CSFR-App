@@ -1,16 +1,8 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
 
-contextBridge.exposeInMainWorld('versions', {
-  node: () => process.versions.node,
-  chrome: () => process.versions.chrome,
-  electron: () => process.versions.electron,
-  ping: () => ipcRenderer.invoke('ping')
-  // we can also expose variables, not just functions
-})
 
-
-contextBridge.exposeInMainWorld('json_data', {
-  getData: () => ipcRenderer.invoke('get-data')
-  // we can also expose variables, not just functions
+contextBridge.exposeInMainWorld('AbilityViewer', {
+  getAbilities: () => ipcRenderer.invoke('ability:get-abilities'),
+  getAbilityFromId: (id) => ipcRenderer.invoke('ability:get-ability-from-name'),
 })

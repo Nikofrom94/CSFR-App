@@ -2,7 +2,8 @@
 const LoadData = async () => {
   const json_data = await window.json_data.getData();
   const focus_list =json_data.focus_list;
-  const ab_list = json_data.ab_list;
+  //const ab_list = json_data.ab_list;
+  const ab_list = await window.AbilityViewer.getAbilities();
   LoadFocus(focus_list);
   LoadAbilities(ab_list);
   HideAll();
@@ -10,6 +11,11 @@ const LoadData = async () => {
 
 LoadData();
 
+const LoadAbilityFromId = async (id) => {
+  const ability = await window.AbilityViewer.getAbilityFromId(id);
+  console.log(ability);
+  return ability;
+}
 
 function HideAll(){
   $("#ab_list").hide();
@@ -46,5 +52,13 @@ function LoadAbilities(ab_list){
     const f_name_en = "<td>"+element.name_en+"</td>";
     const f_cs_page = "<td>"+element.cs_page+"</td>";
     $("#ab_table_body").append("<tr>"+f_id+f_name+f_name_en+f_cs_page+"</tr>")
+  }
+}
+
+function DisplayAbility(id){
+  const ab = LoadAbilityFromId(id);
+  if(ab != null){
+    HideAll();
+    
   }
 }
