@@ -30,20 +30,9 @@ const createWindow = () => {
   win.loadFile('index.html')
 }
 
-const createAbilityWindow = () => {
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
-    }
-  })
-  win.loadFile('index.html')
-}
-
 /** when app is ready, initialize handles */
 app.whenReady().then(() => {
-  ipcMain.handle('ability:get-abilities', () => AbilityListView.get_abilities );
+  ipcMain.handle('ability:get-abilities', AbilityListView.get_abilities );
   ipcMain.handle('ability:get-ability-from-name', (id) => AbilityView.get_ability_from_name );
 //  ipcMain.on('get-data', handleGetData);
   createWindow();
