@@ -14,66 +14,10 @@
     <link href="./static/bootstrap-5.3.3-dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="./static/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="./static/jquery-3.7.1-dist/jquery-3.7.1.min.js"></script>
+    <script src="./static/csrd.js"></script>
+    <script src="./static/csapp-tabs.js"></script>
+    <link href="./static/csapp-tabs.css" rel="stylesheet" crossorigin="anonymous">
 
-      <style>
-         /* Style the tab */
-.tab {
-  overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
-}
-
-/* Style the buttons that are used to open the tab content */
-.tab button {
-  background-color: inherit;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
-}
-
-/* Change background color of buttons on hover */
-.tab button:hover {
-  background-color: #ddd;
-}
-
-/* Create an active/current tablink class */
-.tab button.active {
-  background-color: #ccc;
-}
-
-/* Style the tab content */
-.tabcontent {
-  display: none;
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-top: none;
-} 
-      </style>
-<script>
-  function displayTab(evt, cityName) {
-  // Declare all variables
-  var i, tabcontent, tablinks;
-
-  // Get all elements with class="tabcontent" and hide them
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-
-  // Get all elements with class="tablinks" and remove the class "active"
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-
-  // Show the current tab, and add an "active" class to the button that opened the tab
-  document.getElementById(cityName).style.display = "block";
-  evt.currentTarget.className += " active";
-}
-</script>
 
     <title>Cypher System Character Generator</title>
 
@@ -99,7 +43,12 @@
           </div>
         </nav>
       </div>
-   <div class="col-sm-10" id="main-display">
+      <!-- begin main display -->
+   <div class="col-sm-10" id="main-display"><!-- main display -->
+    <!-- begin tabs-->
+    <div class="tab"></div>
+    <div id="tabs"></div>
+    <!-- end tabs-->
     <div id="info">
       <div id="focus_list" >
         <table class="table table-striped">
@@ -115,22 +64,10 @@
           <tbody id="focus_table_body"></tbody>
         </table>
       </div>
-      <div id="ab_list" >
-        <input type="text" id="ab_list_search" onkeyup="ab_list_search()" placeholder="Search for names..">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Name_en</th>
-              <th>cs_page</th>
-            </tr>
-          </thead>
-          <tbody id="ab_table_body"></tbody>
-        </table>
-      </div>
+
     </div>
     </div>
+    <!-- end main display -->
     </div>
   </body>
   <script src="./renderer.js"></script>

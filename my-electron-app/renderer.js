@@ -1,6 +1,5 @@
 let ab_list = null;
 
-
 const LoadData = async () => {
   //const json_data = await window.json_data.getData();
   //const focus_list =json_data.focus_list;
@@ -25,8 +24,9 @@ function HideAll(){
 }
 
 function ShowAbilities(){
-  HideAll();
-  $("#ab_list").show();
+  if($("#tab_ab_list") == null){
+
+  }
 }
 
 function ShowFocus(){
@@ -57,20 +57,9 @@ function LoadAbilities(ab_list){
   }
 }
 
-function ab_list_search(){
-  const input = document.getElementById("ab_list_search");
-  filter = input.value.toUpperCase();
-  // Loop through all ab_list items, and hide the row of those who don't match the search query
-  for (i = 0; i < ab_list.length; i++) {
-    const current_name = ab_list[i].name;
-    if (current_name.toUpperCase().indexOf(filter) > -1) {
-      $("#ab_item_tr_"+ab_list[i].id).show();
-    } else {
-      $("#ab_item_tr_"+ab_list[i].id).hide();
-    }
-  }
-}
 
+
+/** get the ability from backend DB and diaply it into a new tab */
 function DisplayAbility(id){
   const ab = LoadAbilityFromId(id);
   if(ab != null){
@@ -78,3 +67,4 @@ function DisplayAbility(id){
     
   }
 }
+
