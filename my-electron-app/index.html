@@ -2,13 +2,15 @@
 <html>
   <head>
     <meta charset="UTF-8" />
+    <!--
     <meta
       http-equiv="Content-Security-Policy"
       content="default-src 'self'; script-src 'self' 'unsafe-inline'"
     />
+    -->
     <meta
       http-equiv="X-Content-Security-Policy"
-      content="default-src 'self'; script-src 'self';"
+    
     />
 
     <link href="./static/bootstrap-5.3.3-dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -16,7 +18,7 @@
     <script src="./static/jquery-3.7.1-dist/jquery-3.7.1.min.js"></script>
     <script src="./static/csrd.js"></script>
     <script src="./static/csapp-tabs.js"></script>
-    <link href="./static/csapp-tabs.css" rel="stylesheet" crossorigin="anonymous">
+    
 
 
     <title>Cypher System Character Generator</title>
@@ -46,29 +48,15 @@
       <!-- begin main display -->
    <div class="col-sm-10" id="main-display"><!-- main display -->
     <!-- begin tabs-->
-    <div class="tab"></div>
-    <div id="tabs"></div>
-    <!-- end tabs-->
-    <div id="info">
-      <div id="focus_list" >
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Name_en</th>
-              <th>Description</th>
-              <th>cs_page</th>
-            </tr>
-          </thead>
-          <tbody id="focus_table_body"></tbody>
-        </table>
-      </div>
-
-    </div>
-    </div>
+      <!--<div class="tab"></div>
+      <div id="tabs"></div>-->
+      <!-- end tabs-->
+      <div id="info"></div>
     <!-- end main display -->
     </div>
   </body>
   <script src="./renderer.js"></script>
+  <script>
+
+  </script>
 </html>

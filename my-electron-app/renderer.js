@@ -4,13 +4,19 @@ const LoadData = async () => {
   //const json_data = await window.json_data.getData();
   //const focus_list =json_data.focus_list;
   //const ab_list = json_data.ab_list;
-  ab_list = await window.AbilityViewer.getAbilities();
+  const ab_list = await window.AbilityViewer.getAbilities();
  // LoadFocus(focus_list);
   LoadAbilities(ab_list);
   HideAll();
 }
 
-LoadData();
+const LoadAbilitiesAsync = async () => {
+  ab_list = await window.AbilityViewer.getAbilities();
+  LoadAbilities(ab_list);
+}
+
+
+//LoadData();
 
 const LoadAbilityFromId = async (id) => {
   const ability = await window.AbilityViewer.getAbilityFromId(id);
@@ -24,14 +30,25 @@ function HideAll(){
 }
 
 function ShowAbilities(){
-  if($("#tab_ab_list") == null){
+  if(document.getElementById("ability_list_tab") == null){
+    const divAbilityList = getDIVAbilities();
+    const focus_tab = addTab("maintabcontrol","ability_list_tab", divAbilityList);
+    LoadAbilitiesAsync();
+  }
+}
 
+function ShowAbility(id){
+  if(document.getElementById("ab_"+id+"_tab") == null){
+    const divAbilityList = getDIVAbility();
+    const focus_tab = addTab("maintabcontrol","ab_"+id+"_tab", divAbilityList);
+    LoadAbilitiesAsync();
   }
 }
 
 function ShowFocus(){
-  HideAll();
-  $("#focus_list").show();
+  //HideAll();
+  //$("#focus_list").show();
+  const focus_tab = addTab("maintabcontrol","focus_list_tab", );
 }
 
 function LoadFocus(focus_list){
@@ -53,7 +70,7 @@ function LoadAbilities(ab_list){
     const f_name = "<td>"+element.name+"</td>";
     const f_name_en = "<td>"+element.name_en+"</td>";
     const f_cs_page = "<td>"+element.cs_page+"</td>";
-    $("#ab_table_body").append("<tr id=\"ab_item_tr_"+element.id+"\">"+f_id+f_name+f_name_en+f_cs_page+"</tr>")
+    $("#ab_list_table_body").append("<tr id=\"ab_item_tr_"+element.id+"\">"+f_id+f_name+f_name_en+f_cs_page+"</tr>")
   }
 }
 
@@ -68,3 +85,8 @@ function DisplayAbility(id){
   }
 }
 
+let maintabcontrol=null;
+$(document).ready(function(){
+    const maindisplay = document.getElementById("main-display");
+    maintabcontrol = createTabControl("maintabcontrol",maindisplay);
+});

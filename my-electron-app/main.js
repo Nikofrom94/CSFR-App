@@ -34,6 +34,7 @@ const createWindow = () => {
 app.whenReady().then(() => {
   ipcMain.handle('ability:get-abilities', AbilityListView.get_abilities );
   ipcMain.handle('ability:get-ability-from-name', (id) => AbilityView.get_ability_from_name );
+  ipcMain.handle('ability:get-ability-from-id', (id) => AbilityView.get_ability_from_id );
 //  ipcMain.on('get-data', handleGetData);
   createWindow();
 })
