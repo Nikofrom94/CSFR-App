@@ -53,16 +53,39 @@ function getDIVAbilities(){
 /** showAbilityList */
 function showAbilityList(){
   //const mainTabcontrol = document.getElementById("maintabcontrol");
-  const ab_list_tab = mainTabcontrol.addTab("ab_list", getDIVFocus());
+  const ab_list_tab = mainTabcontrol.addTab("ab_list", getDIVAbilities());
   ab_list_tab.show();
 }
+/** showAbilityList */
+function showAbility(id){
+  //const mainTabcontrol = document.getElementById("maintabcontrol");
+  const ab_tab = mainTabcontrol.addTab("ab_"+id, getDIVAbility(id));
+  ab_tab.show();
+}
+function getDIVAbilityField(fieldname, fieldvalue){
+  const div_ab_field = document.createElement("div")
+  div_ab_field.className="row";
+  const div_col_name = document.createElement("div");
+  div_col_name.className = "col-sm-2";
+  div_col_name.innerHTML = fieldname;
+  div_ab_field.append(div_col_name);
+  const div_col_value = document.createElement("div");
+  div_col_value.className = "col-sm-4";
+  div_col_value.innerHTML = fieldvalue;
+  div_ab_field.append(div_col_value);
+  return div_ab_field;
+}
 /** return the block displaying the list of abilities */
-function getDIVAbility(id){
-
+function getDIVAbility(id, ability){
   const div_ab = document.createElement("div");
   div_ab.id = "div_ab_"+id;
-  
-
+  div_ab.className = "container";
+  div_ab.append(getDIVAbilityField("ID",ability.id));
+  div_ab.append(getDIVAbilityField("Name",ability.name));
+  div_ab.append(getDIVAbilityField("Name (en)",ability.name_en));
+  div_ab.append(getDIVAbilityField("Stat",ability.stat));
+  div_ab.append(getDIVAbilityField("Rang",ability.tier));
+  div_ab.append(getDIVAbilityField("Description",ability.description));
   return div_ab;
 }
 /*************************************************************** */

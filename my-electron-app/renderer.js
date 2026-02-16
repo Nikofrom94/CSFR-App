@@ -67,7 +67,7 @@ function LoadAbilities(ab_list){
   for(let i=0;i<ab_list.length;i++){
     const element = ab_list[i];
     const f_id = "<td>"+element.id+"</td>";
-    const f_name = "<td>"+element.name+"</td>";
+    const f_name = "<td><div class="++">"+element.name+"</div></td>";
     const f_name_en = "<td>"+element.name_en+"</td>";
     const f_cs_page = "<td>"+element.cs_page+"</td>";
     $("#ab_list_table_body").append("<tr id=\"ab_item_tr_"+element.id+"\">"+f_id+f_name+f_name_en+f_cs_page+"</tr>")

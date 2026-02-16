@@ -10,6 +10,7 @@ class AbilityView {
         name: ability.name,
         name_en: ability.name_en,
         description: ability.description,
+        stat: ability.stat,
         tier: ability.tier,
         cs_page: ability.cs_page,
         categories: get_category_names(ability),
