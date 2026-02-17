@@ -115,20 +115,21 @@ class CSBrowser(QTreeWidget):
         for item in csdb.get_foci():
             node = CSBrowserItem(item)
             root_foci.addChild(node)
-        self.itemClicked.connect(self.show_item)
+        self.itemDoubleClicked.connect(self.show_item)
 
     def show_item(self, item, column):
         index:int = self._target_tab.get_tab_index(item.label)
         if index >= 0 :
-            self._target_tab.setTabEnabled(index, True)
+            self._target_tab.setCurrentIndex(index)
         else:
             item_widget = item.targetClass(item._item)
             self._target_tab.show_tab(item.label,item_widget)
 
 class CSTab(QTabWidget):
     def __init__(self):
-        super().__init__()
+        super(CSTab,self).__init__()
         self.setTabsClosable(True)
+        self.tabCloseRequested.connect(self.close_tab)
 
     def get_tab_index(self, label:str) -> int:
         for index in range(self.count()):
@@ -140,11 +141,14 @@ class CSTab(QTabWidget):
         # check for a tab with same name to show it
         for index in range(self.count()):
             if self.tabText(index) == label:
-                self.setTabEnabled(index,True)
+                self.setCurrentIndex(index)
                 return
         # no tab with that name/label : add it
         index = self.addTab(content, label)
-        self.setTabEnabled(index,True)
+        self.setCurrentIndex(index)
+
+    def close_tab(self,index):
+        self.removeTab(index)
 
 class MyWindow(QMainWindow):
     def __init__(self):
@@ -157,31 +161,25 @@ class MyWindow(QMainWindow):
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
 
-        splitter = QSplitter(central_widget)
-        main_grid = QGridLayout()             # l, c, h, w
+            # l, c, h, w
         tab_grid = CSTab()
-
         browse_grid = QGridLayout()
         browse_tree = CSBrowser(tab_grid)
+        browse_grid.addWidget(browse_tree,0,0)
 
+        # main_grid = QGridLayout()
+        #main_grid.addWidget(browse_tree, 0, 0)
+        #main_grid.addWidget(tab_grid, 0,1)
+
+        #central_widget.setLayout(main_grid)
+
+        splitter = QSplitter()
         splitter.addWidget(browse_tree)
-
         splitter.addWidget(tab_grid)
+        mainlayout = QGridLayout()
+        mainlayout.addWidget(splitter)
 
-        #
-        # for idx in range(grid.count()):
-        #     item: QLayoutItem = grid.itemAt(idx)
-        #     widget = item.widget()
-        #     widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        #     if isinstance(widget, QPushButton):
-        #         widget.setStyleSheet("background: #595959; color: white; font-weight: bold; font-size: 20px")
-        #     else:
-        #         widget.setStyleSheet("background: #a2af77; font-weight: bold")
-        #
-        # equal_button.setStyleSheet("background: #f05a2D; font-weight: bold; font-size: 20px; color: white;")
-
-        central_widget.setLayout(central_widget)
-
+        central_widget.setLayout(mainlayout)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
