@@ -2,7 +2,8 @@ import sys,sqlite3
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton, QWidget, QGridLayout, QLCDNumber, QSizePolicy, QLayoutItem, QLabel
 from PySide6.QtWidgets import QTreeWidget,QTreeWidgetItem
-from PySide6.QtWidgets import QTabWidget,QFormLayout,QLineEdit
+from PySide6.QtWidgets import QTabWidget,QFormLayout,QLineEdit,QTextEdit
+from PySide6.QtWidgets import QSplitter
 
 CSCSG_DBPATH = '/home/niko/Documents/jdr/CypherSystem/Cypher-SRD-FR/CSCG/cscgsite/db.sqlite3'
 
@@ -36,21 +37,24 @@ class CSFocus(CSItem):
         self.name_en = row['name_en']
 
 
-class GridCSAbility(QGridLayout):
+class CSAbilityTab(QWidget):
     def __init__(self, ability:CSAbility):
         super().__init__()
         self._ability = ability
+        gridlayout = QGridLayout()
         self.name = QLineEdit(self._ability.name)
         self.description = QTextEdit(self._ability.description)
         self.stat = QLineEdit(self._ability.stat)
         self.cs_page = QLineEdit(self._ability.cs_page)
-        self.form = QFormLayout()
-        self.form.addRow(self.tr("&Name"), self.name)
-        self.form.addRow(self.tr("&Stat"), self.stat)
-        self.form.addRow(self.tr("&cs_page"), self.cs_page)
-        self.addWidget(self.form,0,0)
-        self.addWidget(QLabel(self.tr("&Description")),1,0)
-        self.addWidget(self.description,2,0)
+
+        form = QFormLayout()
+        form.addRow(self.tr("&Name"), self.name)
+        form.addRow(self.tr("&Stat"), self.stat)
+        form.addRow(self.tr("&cs_page"), self.cs_page)
+        gridlayout.addLayout(form,0,0)
+        gridlayout.addWidget(QLabel(self.tr("D&escription")),1,0)
+        gridlayout.addWidget(self.description,2,0)
+        self.setLayout(gridlayout)
 
 
 class CSCGDB():
@@ -77,18 +81,23 @@ class CSCGDB():
         return self.get_csitems('cscg_focus', CSItem)
 
 
+
 class CSBrowserItem(QTreeWidgetItem):
     """Wrapper for browsing Abilities, Foci, Types & al
         add a signal to show the item in a tab"""
-    def __init__(self, item, target=None):
-        super().__init__(None, [item.label])
-        if target is not None:
-            pass
+    def __init__(self, item):
+        super(CSBrowserItem,self).__init__(None, [item.label])
+        self._item = item
+        self.label = item.label
+        if type(self._item) == CSAbility:
+            self.targetClass = CSAbilityTab
+
 
 
 class CSBrowser(QTreeWidget):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, target_tab):
+        super(CSBrowser,self).__init__(None)
+        self._target_tab = target_tab
         csdb = CSCGDB(CSCSG_DBPATH)
         self.setColumnCount(1)
         self.insertTopLevelItems(0, [QTreeWidgetItem(None,[self.tr("Abilities")])])
@@ -106,11 +115,26 @@ class CSBrowser(QTreeWidget):
         for item in csdb.get_foci():
             node = CSBrowserItem(item)
             root_foci.addChild(node)
+        self.itemClicked.connect(self.show_item)
+
+    def show_item(self, item, column):
+        index:int = self._target_tab.get_tab_index(item.label)
+        if index >= 0 :
+            self._target_tab.setTabEnabled(index, True)
+        else:
+            item_widget = item.targetClass(item._item)
+            self._target_tab.show_tab(item.label,item_widget)
 
 class CSTab(QTabWidget):
     def __init__(self):
         super().__init__()
         self.setTabsClosable(True)
+
+    def get_tab_index(self, label:str) -> int:
+        for index in range(self.count()):
+            if self.tabText(index) == label:
+                return index
+        return -1
 
     def show_tab(self,label:str, content:QWidget) -> None:
         # check for a tab with same name to show it
@@ -119,7 +143,8 @@ class CSTab(QTabWidget):
                 self.setTabEnabled(index,True)
                 return
         # no tab with that name/label : add it
-        self.addTab(content, label)
+        index = self.addTab(content, label)
+        self.setTabEnabled(index,True)
 
 class MyWindow(QMainWindow):
     def __init__(self):
@@ -132,17 +157,16 @@ class MyWindow(QMainWindow):
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
 
+        splitter = QSplitter(central_widget)
         main_grid = QGridLayout()             # l, c, h, w
-
-        browse_grid = QGridLayout()
-        browse_tree = CSBrowser()
-        browse_grid.addWidget(browse_tree,0,0)
-
         tab_grid = CSTab()
 
-        main_grid.addWidget(browse_tree, 0, 0)
+        browse_grid = QGridLayout()
+        browse_tree = CSBrowser(tab_grid)
 
-        main_grid.addWidget(tab_grid, 0,1)
+        splitter.addWidget(browse_tree)
+
+        splitter.addWidget(tab_grid)
 
         #
         # for idx in range(grid.count()):
@@ -156,7 +180,7 @@ class MyWindow(QMainWindow):
         #
         # equal_button.setStyleSheet("background: #f05a2D; font-weight: bold; font-size: 20px; color: white;")
 
-        central_widget.setLayout(main_grid)
+        central_widget.setLayout(central_widget)
 
 
 if __name__ == "__main__":
